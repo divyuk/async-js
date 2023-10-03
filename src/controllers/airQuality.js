@@ -61,4 +61,31 @@ airQulaity.get("/callbackhell", (req, res) => {
   });
 });
 
+airQulaity.get("/promisePage", (req, res) => {
+  let payload = { page: 1 };
+  const searchParams = new URLSearchParams(payload);
+  let total = [];
+
+  airQualityPromise(`${url}?${searchParams}`)
+    .then((resp1) => {
+      payload.page += 1;
+      const searchParams2 = new URLSearchParams(payload);
+      airQualityPromise(`${url}?${searchParams2}`)
+        .then((resp2) => {
+          payload.page += 1;
+          const searchParams3 = new URLSearchParams(payload);
+          airQualityPromise(`${url}?${searchParams3}`)
+            .then((resp3) => {
+              total.push(resp1);
+              total.push(resp2);
+              total.push(resp3);
+              return res.status(200).json(total);
+            })
+            .catch((err3) => res.status(500).json({ error: err3 }));
+        })
+        .catch((err2) => res.status(500).json({ error: err2 }));
+    })
+    .catch((err1) => res.status(500).json({ error: err1 }));
+});
+
 module.exports = airQulaity;
