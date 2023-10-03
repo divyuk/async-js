@@ -61,6 +61,7 @@ airQulaity.get("/callbackhell", (req, res) => {
   });
 });
 
+//! Promise
 airQulaity.get("/promisePage", (req, res) => {
   let payload = { page: 1 };
   const searchParams = new URLSearchParams(payload);
@@ -86,6 +87,30 @@ airQulaity.get("/promisePage", (req, res) => {
         .catch((err2) => res.status(500).json({ error: err2 }));
     })
     .catch((err1) => res.status(500).json({ error: err1 }));
+});
+
+//! Async | Await
+
+airQulaity.get("/asynawaitPage", async (req, res) => {
+  let payload = { page: 1 };
+  const searchParams = new URLSearchParams(payload);
+  let total = [];
+  try {
+    let resp1 = await airQualityPromise(`${url}?${searchParams}`);
+    payload.page += 1;
+    const searchParams2 = new URLSearchParams(payload);
+    let resp2 = await airQualityPromise(`${url}?${searchParams2}`);
+    payload.page += 1;
+    const searchParams3 = new URLSearchParams(payload);
+    let resp3 = await airQualityPromise(`${url}?${searchParams3}`);
+
+    total.push(resp1);
+    total.push(resp2);
+    total.push(resp3);
+    return res.status(200).json(total);
+  } catch (err) {
+    return res.status(500).json({ error: err });
+  }
 });
 
 module.exports = airQulaity;
