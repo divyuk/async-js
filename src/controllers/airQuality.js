@@ -41,12 +41,12 @@ airQulaity.get("/callbackhell", (req, res) => {
     else {
       payload.page += 1;
       const searchParams2 = new URLSearchParams(payload);
-      airQualityCallback(`${url}?${searchParams}`, (err, resp2) => {
+      airQualityCallback(`${url}?${searchParams2}`, (err, resp2) => {
         if (err) return res.status(500).json({ error: err });
         else {
           payload.page += 1;
           const searchParams3 = new URLSearchParams(payload);
-          airQualityCallback(`${url}?${searchParams}`, (err, resp3) => {
+          airQualityCallback(`${url}?${searchParams3}`, (err, resp3) => {
             if (err) return res.status(500).json({ error: err });
             else {
               total.push(resp1);
