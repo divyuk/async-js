@@ -3,12 +3,8 @@ const axios = require("axios");
 function airQualityCallback(url, callback) {
   axios
     .get(url)
-    .then((resp) => {
-      callback(null, resp.data);
-    })
-    .catch((err) => {
-      callback(err, null);
-    });
+    .then((resp) => callback(null, resp.data))
+    .catch((err) => callback(err, null));
 }
 
 function airQualityPromise(url) {
