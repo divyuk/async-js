@@ -90,7 +90,6 @@ airQulaity.get("/promisePage", (req, res) => {
 });
 
 //! Async | Await
-
 airQulaity.get("/asynawaitPage", async (req, res) => {
   let payload = { page: 1 };
   const searchParams = new URLSearchParams(payload);
@@ -103,7 +102,6 @@ airQulaity.get("/asynawaitPage", async (req, res) => {
     payload.page += 1;
     const searchParams3 = new URLSearchParams(payload);
     let resp3 = await airQualityPromise(`${url}?${searchParams3}`);
-
     total.push(resp1);
     total.push(resp2);
     total.push(resp3);
