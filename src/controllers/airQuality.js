@@ -132,4 +132,25 @@ airQulaity.get("/promiseAll", async (req, res) => {
     });
 });
 
+//! Promise race -> Only fastest page will return the resp
+airQulaity.get("/promiseRace", async (req, res) => {
+  let payload = { page: 1 };
+  const searchParams = new URLSearchParams(payload);
+  let total = [];
+  let prom1 = await airQualityPromise(`${url}?${searchParams}`);
+  payload.page += 1;
+  const searchParams2 = new URLSearchParams(payload);
+  let prom2 = await airQualityPromise(`${url}?${searchParams2}`);
+  payload.page += 1;
+  const searchParams3 = new URLSearchParams(payload);
+  let prom3 = await airQualityPromise(`${url}?${searchParams3}`);
+  Promise.race([prom1, prom2, prom3])
+    .then((values) => {
+      return res.status(200).json(values);
+    })
+    .catch((err) => {
+      return res.status(500).json({ error: err });
+    });
+});
+
 module.exports = airQulaity;
